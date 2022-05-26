@@ -3,15 +3,11 @@ import NextLink from "next/link";
 import {
   List,
   ListItem,
-  ListIcon,
   Divider,
-  Center,
   LinkBox,
   LinkOverlay,
   Box,
-  Heading,
   Flex,
-  Grid,
 } from "@chakra-ui/layout";
 import {
   MdHome,
@@ -19,10 +15,10 @@ import {
   MdLibraryMusic,
   MdPlaylistAdd,
   MdFavorite,
-  MdCircle,
 } from "react-icons/md";
-import { Icon } from "@chakra-ui/react";
 import MenuList from "./MenuList";
+import Logo from "./Logo";
+import { usePlaylist } from "../lib/hooks";
 
 const navMenu = [
   {
@@ -55,21 +51,13 @@ const musicMenu = [
   },
 ];
 
-const playlists = new Array(30)
-  .fill("Playlist")
-  .map((item, i) => `${item} ${i + 1}`);
-
 const Sidebar = () => {
+  const { data: playlists } = usePlaylist();
+
   return (
     <Box w="100%" h="calc(100vh - 100px)" bg="black" px={1} color="gray">
       <Flex py={5} h="100%" direction="column">
-        <Flex pt={4} pb={8} color="#1DB954" align="end">
-          {/* <NextImage src="/logo.png" height={68} width={223} /> */}
-          <Icon as={MdCircle} fontSize="5xl" mr={1} />
-          <Heading as="div" size="2xl" textAlign="center">
-            Spotify
-          </Heading>
-        </Flex>
+        <Logo />
         <Box mb={5}>
           <MenuList menus={navMenu} />
         </Box>
@@ -88,10 +76,10 @@ const Sidebar = () => {
         >
           <List spacing={2}>
             {playlists.map((playlist) => (
-              <ListItem px={5} key={playlist}>
+              <ListItem px={5} key={playlist.id}>
                 <LinkBox>
                   <NextLink href="/" passHref>
-                    <LinkOverlay>{playlist}</LinkOverlay>
+                    <LinkOverlay>{playlist.name}</LinkOverlay>
                   </NextLink>
                 </LinkBox>
               </ListItem>

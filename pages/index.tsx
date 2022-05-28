@@ -3,8 +3,16 @@ import { Artist } from "@prisma/client";
 import { Image } from "@chakra-ui/react";
 import GradientLayout from "../components/GradientLayout";
 import prisma from "../lib/prisma";
-import { hideScrollBar } from "../utils/chakra";
+import { hideScrollBar } from "../lib/chakra
 import { useGetUser } from "../lib/hooks";
+
+export const getServerSideProps = async () => {
+  const artists = await prisma.artist.findMany({});
+
+  return {
+    props: { artists },
+  };
+};
 
 const Home = ({ artists }: { artists: Artist[] }) => {
   const { data: user } = useGetUser();
@@ -43,14 +51,6 @@ const Home = ({ artists }: { artists: Artist[] }) => {
       </Box>
     </GradientLayout>
   );
-};
-
-export const getServerSideProps = async () => {
-  const artists = await prisma.artist.findMany({});
-
-  return {
-    props: { artists },
-  };
 };
 
 export default Home;

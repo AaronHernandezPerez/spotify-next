@@ -16,6 +16,7 @@ const theme = extendTheme({
       800: "#424242",
       900: "#212121",
     },
+    spotify: "#1DB954",
   },
   components: {
     Button: {

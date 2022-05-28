@@ -2,29 +2,10 @@ import { NextApiRequest } from "next";
 import { NextParsedUrlQuery } from "next/dist/server/request-meta";
 import React from "react";
 import GradientLayout from "../../components/GradientLayout";
+import SongsTable from "../../components/SongsTable";
 import { validateToken } from "../../lib/auth";
 import prisma from "../../lib/prisma";
-import { UnwrappedPromiseType } from "../../utils/types";
-// interface PrismPlaylist{}
-const getBgColor = id => {
-  const colors = [
-    "red",
-    "green",
-    "blue",
-    "orange",
-    "purple", 
-    "gray",
-    "teal",
-    "yellow"
-  ]
-  
-  let index = id-1
-  if (index > colors.length) {
-    index = index % colors.length
-  }
-
-  return colors[index]
-}
+import { getBgColor } from "../../lib/colors";
 
 export const getServerSideProps = async ({
   query,
@@ -33,7 +14,6 @@ export const getServerSideProps = async ({
   query: NextParsedUrlQuery & { id: string };
   req: NextApiRequest;
 }) => {
-  console.log(query);
   const { id } = validateToken(req.cookies.token);
   const [playlist] = await prisma.playlist.findMany({
     where: {
@@ -55,19 +35,25 @@ export const getServerSideProps = async ({
     },
   });
 
-  
   return {
     props: { playlist },
   };
 };
 
-type ServerSideProps =  UnwrappedPromiseType<typeof getServerSideProps>;
-type PlaylistQuery  = Pick<ServerSideProps, "props">["props"]["playlist"]
+type ServerSideProps = Awaited<ReturnType<typeof getServerSideProps>>["props"];
 
-const Playlist = ({ playlist }: {playlist: PlaylistQuery} ) => {
-  return <GradientLayout color={getBgColor(playlist.id)}></GradientLayout>>
+const Playlist = ({ playlist }: ServerSideProps) => {
+  return (
+    <GradientLayout
+      color={getBgColor(playlist.id)}
+      title={playlist.name}
+      subtitle="playlist"
+      description={`${playlist.songs.length} songs`}
+      image={`https://picsum.photos/id/${playlist.id + 10}/300/300`}
+    >
+      <SongsTable songs={playlist.songs} />
+    </GradientLayout>
+  );
 };
-
-
 
 export default Playlist;

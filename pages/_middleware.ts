@@ -10,6 +10,7 @@ export default (req: NextRequest) => {
   }
 
   const { token } = req.cookies;
+  console.log(token);
 
   if (!token) {
     return NextResponse.redirect(`${origin}/signin`);

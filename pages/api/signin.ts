@@ -1,8 +1,8 @@
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
+import { jwtSign } from "../../lib/auth";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {
@@ -25,15 +25,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     return res.status(401).json({ error: "Invalid password" });
   }
 
-  const token = jwt.sign(
-    {
-      email: user.email,
-      id: user.id,
-      time: Date.now(),
-    },
-    process.env.SECRET,
-    { expiresIn: "24h" }
-  );
+  const token = jwtSign(user);
 
   res.setHeader(
     "Set-Cookie",
@@ -46,5 +38,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     })
   );
 
-  res.json(user);
+  return res.json(user);
 };

@@ -43,5 +43,6 @@ module.exports = {
     ],
     "prettier/prettier": "warn",
     "no-console": "off",
+    "react/require-default-props": "off",
   },
 };

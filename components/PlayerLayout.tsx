@@ -8,7 +8,9 @@ const PlayerLayout = ({ children }: PropsWithChildren<{}>) => {
       <Box position="absolute" top="0" w="250px" left="0">
         <Sidebar />
       </Box>
-      <Box ml="250px">{children}</Box>
+      <Box ml="250px" mb="100px" h="calc(100vh - 100px)">
+        {children}
+      </Box>
       <Box position="absolute" left="0" bottom="0">
         player
       </Box>

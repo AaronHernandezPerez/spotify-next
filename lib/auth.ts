@@ -13,6 +13,17 @@ type validateRouteHandler<T = any> = (
   user: User
 ) => unknown | Promise<unknown>;
 
+interface JwtFields {
+  id: number;
+  email: string;
+  time: number;
+}
+
+export const validateToken = (token) => {
+  const user = jwt.verify(token, process.env.SECRET) as JwtPayload & JwtFields;
+  return user;
+};
+
 export const validateRoute = (handler: validateRouteHandler) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
     const { token } = req.cookies;
@@ -21,7 +32,7 @@ export const validateRoute = (handler: validateRouteHandler) => {
     }
 
     try {
-      const { id } = jwt.verify(token, process.env.SECRET) as JwtPayload;
+      const { id } = validateToken(token);
       const user = await prisma.user.findUnique({
         where: {
           id,
@@ -32,9 +43,19 @@ export const validateRoute = (handler: validateRouteHandler) => {
         throw new Error("Not a real user");
       }
 
-      handler(req, res, user);
+      return handler(req, res, user);
     } catch (error) {
       throwAuthError(res);
     }
   };
+};
+
+export const jwtSign = (user: User) => {
+  const jwtFields: JwtFields = {
+    email: user.email,
+    id: user.id,
+    time: Date.now(),
+  };
+
+  return jwt.sign(jwtFields, process.env.SECRET, { expiresIn: "24h" });
 };

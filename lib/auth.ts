@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
-import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextApiRequest, NextApiResponse } from "next";
+import { validateToken } from "./jwt";
 import prisma from "./prisma";
 
 const throwAuthError = (res: NextApiResponse) => {
@@ -12,17 +12,6 @@ type validateRouteHandler<T = any> = (
   res: NextApiResponse<T>,
   user: User
 ) => unknown | Promise<unknown>;
-
-interface JwtFields {
-  id: number;
-  email: string;
-  time: number;
-}
-
-export const validateToken = (token) => {
-  const user = jwt.verify(token, process.env.SECRET) as JwtPayload & JwtFields;
-  return user;
-};
 
 export const validateRoute = (handler: validateRouteHandler) => {
   return async (req: NextApiRequest, res: NextApiResponse) => {
@@ -48,14 +37,4 @@ export const validateRoute = (handler: validateRouteHandler) => {
       throwAuthError(res);
     }
   };
-};
-
-export const jwtSign = (user: User) => {
-  const jwtFields: JwtFields = {
-    email: user.email,
-    id: user.id,
-    time: Date.now(),
-  };
-
-  return jwt.sign(jwtFields, process.env.SECRET, { expiresIn: "24h" });
 };

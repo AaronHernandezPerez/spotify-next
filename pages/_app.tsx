@@ -1,5 +1,9 @@
-// import "../styles/globals.css";
+import { ReactNode, ComponentType } from "react";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { StoreProvider } from "easy-peasy";
+import { AppProps } from "next/app";
+import "reset-css";
+import { store } from "../lib/store";
 import PlayerLayout from "../components/PlayerLayout";
 
 const theme = extendTheme({
@@ -32,16 +36,27 @@ const theme = extendTheme({
   },
 });
 
-const MyApp = ({ Component, pageProps }) => {
+interface CustomAppProps extends AppProps {
+  Component: AppProps["Component"] & {
+    authPage?: boolean;
+  };
+}
+
+type Props = StoreProvider["props"] & { children: ReactNode };
+const StoreProviderCasted = StoreProvider as unknown as ComponentType<Props>;
+
+const MyApp = ({ Component, pageProps }: CustomAppProps) => {
   return (
     <ChakraProvider theme={theme}>
-      {Component.authPage ? (
-        <Component {...pageProps} />
-      ) : (
-        <PlayerLayout>
+      <StoreProviderCasted store={store}>
+        {Component.authPage ? (
           <Component {...pageProps} />
-        </PlayerLayout>
-      )}
+        ) : (
+          <PlayerLayout>
+            <Component {...pageProps} />
+          </PlayerLayout>
+        )}
+      </StoreProviderCasted>
     </ChakraProvider>
   );
 };

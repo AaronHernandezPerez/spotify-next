@@ -4,8 +4,8 @@ export const formatTime = (timeInSeconds = 0) => {
   return formatDuration(timeInSeconds * 1000);
 };
 
-export const formatDate = (date: Date) => {
-  return date.toLocaleDateString(navigator.language, {
+export const formatDate = (date: Date, locale?: string) => {
+  return date.toLocaleDateString(locale ?? navigator?.language, {
     year: "numeric",
     month: "short",
     day: "numeric",

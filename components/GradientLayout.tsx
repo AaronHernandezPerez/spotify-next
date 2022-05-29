@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Box, Flex, Text } from "@chakra-ui/layout";
 import { Image, ThemeTypings } from "@chakra-ui/react";
+import { hideScrollBar } from "../lib/chakra";
 
 const GradientLayout = ({
   color,
@@ -23,7 +24,9 @@ const GradientLayout = ({
     <Box
       h="100%"
       overflowY="auto"
+      // linear-gradient(rgba(0,0,0,.6) 0,#121212 100%)
       bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.800 40%, rgba(0,0,0, .95) 75%)`}
+      sx={hideScrollBar}
     >
       <Flex bg={`${color}.600`} p="5" align="end">
         <Box p={2}>

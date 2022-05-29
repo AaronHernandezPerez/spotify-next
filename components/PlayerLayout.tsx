@@ -1,6 +1,7 @@
 import { PropsWithChildren } from "react";
 import { Box } from "@chakra-ui/layout";
 import Sidebar from "./Sidebar";
+import PlayerBar from "./PlayerBar";
 
 const PlayerLayout = ({ children }: PropsWithChildren<{}>) => {
   return (
@@ -12,7 +13,7 @@ const PlayerLayout = ({ children }: PropsWithChildren<{}>) => {
         {children}
       </Box>
       <Box position="absolute" left="0" bottom="0">
-        player
+        <PlayerBar />
       </Box>
     </Box>
   );

@@ -3,7 +3,7 @@ import { Artist } from "@prisma/client";
 import { Image } from "@chakra-ui/react";
 import GradientLayout from "../components/GradientLayout";
 import prisma from "../lib/prisma";
-import { hideScrollBar } from "../lib/chakra
+import { hideScrollBar } from "../lib/chakra";
 import { useGetUser } from "../lib/hooks";
 
 export const getServerSideProps = async () => {

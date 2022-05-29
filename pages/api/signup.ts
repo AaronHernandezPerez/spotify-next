@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import cookie from "cookie";
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../lib/prisma";
-import { jwtSign } from "../../lib/auth";
+import { jwtSign } from "../../lib/jwt";
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method !== "POST") {

@@ -28,10 +28,21 @@ const GradientLayout = ({
       bgGradient={`linear(${color}.500 0%, ${color}.600 15%, ${color}.800 40%, rgba(0,0,0, .95) 75%)`}
       sx={hideScrollBar}
     >
-      <Flex bg={`${color}.600`} p="5" align="end">
-        <Box p={2}>
+      <Flex
+        flexDirection={{
+          base: "column",
+          md: "row",
+        }}
+        bg={`${color}.600`}
+        p="5"
+        align={{
+          base: "center",
+          md: "end",
+        }}
+      >
+        <Box p={2} maxW="160px">
           <Image
-            boxSize="160px"
+            boxSize="100%"
             boxShadow="2xl"
             src={image}
             borderRadius={roundImage ? "100%" : "2xl"}

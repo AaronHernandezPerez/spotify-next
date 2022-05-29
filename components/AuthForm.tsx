@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { Box, Flex, Input, Button, Text } from "@chakra-ui/react";
+import { Box, Flex, Input, Button } from "@chakra-ui/react";
 import { useRouter } from "next/router";
-import { iseSWRConfig } from "swr";
 import { auth, Mode } from "../lib/mutations";
 import Logo from "./Logo";
 

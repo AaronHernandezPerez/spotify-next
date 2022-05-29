@@ -1,6 +1,5 @@
 import { NextApiRequest } from "next";
 import { NextParsedUrlQuery } from "next/dist/server/request-meta";
-import React from "react";
 import GradientLayout from "../../components/GradientLayout";
 import SongsTable from "../../components/SongsTable";
 import { validateToken } from "../../lib/jwt";

@@ -1,6 +1,5 @@
 /* Edge functions middleware, happens on the network layer */
 import { NextRequest, NextResponse } from "next/server";
-import { validateToken } from "../lib/jwt";
 
 const noLoginPages = ["/signin", "/signup", "/api/signin", "/api/signup"];
 
@@ -15,12 +14,6 @@ export default (req: NextRequest) => {
 
   const { token } = req.cookies;
   if (!token) {
-    return redirectToSigning(origin);
-  }
-
-  try {
-    validateToken(token); // doesn't work with next 12.1.6
-  } catch (error) {
     return redirectToSigning(origin);
   }
 };

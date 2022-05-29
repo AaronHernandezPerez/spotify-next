@@ -1,6 +1,5 @@
 import { Flex, Heading } from "@chakra-ui/layout";
 import { Icon } from "@chakra-ui/react";
-import React from "react";
 import { MdCircle } from "react-icons/md";
 
 const Logo = () => {

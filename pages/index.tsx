@@ -39,7 +39,6 @@ const Home = ({ artists }: { artists: Artist[] }) => {
                   src={`https://picsum.photos/id/${artist.id}/300/300`}
                   borderRadius="full"
                 />
-                {artist.name}
                 <Box mt="5">
                   <Text fontSize="large">{artist.name}</Text>
                   <Text fontSize="x-small">Artist</Text>

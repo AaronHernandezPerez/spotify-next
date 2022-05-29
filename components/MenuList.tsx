@@ -6,7 +6,6 @@ import {
   LinkOverlay,
   ListIcon,
 } from "@chakra-ui/layout";
-import React from "react";
 import { IconType } from "react-icons";
 
 interface Props {

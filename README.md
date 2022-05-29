@@ -2,8 +2,14 @@
 
 ### Preview
 
-![home preview](./docs/home.PNG)
-![playlist preview](./docs/playlist.PNG)
+<center>
+<table >
+  <tr >
+    <td valign="top"><img src="./docs/home.PNG" width="300px" /></td>
+    <td valign="top"><img src="./docs/playlist.PNG"  width="300px"  /></td>
+  </tr>
+</table>
+</center>
 
 First, install the dependencies
 

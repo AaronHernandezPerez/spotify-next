@@ -18,7 +18,7 @@ const Home = ({ artists }: { artists: Artist[] }) => {
   const { data: user } = useGetUser();
   return (
     <GradientLayout
-      color="purple"
+      color="red"
       title={`${user?.firstName ?? ""} ${user?.lastName ?? ""}`}
       subtitle="profile"
       description={`${user?.playlistsCount} public playlists`}
